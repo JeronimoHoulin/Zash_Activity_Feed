@@ -51,11 +51,15 @@
 
 .tableActivity {
     border-collapse: collapse;
+    margin-bottom: 5%;
+
+    width: 80%;
+
 }
 
 .tableActivity td {
 
-    height: 50px;
+    height: 40px;
 
     border-top: 15px solid #fff;
     background-color: rgba(128, 128, 128, 0.171);

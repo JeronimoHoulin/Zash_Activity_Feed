@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './table.css';
 
 import profile_pic from "../Content/MyLemon.jpg"
 
-
-//Worked with tables before.. might be easyer to map each item and add styles accordingly...
-//import Papa, { parse } from 'papaparse';
-
-const parse = require('html-react-parser');
+import opensea_log from "../Content/OpenSea.png"
+import reservoir_log from "../Content/reservoir.png"
+import looksrare_log from "../Content/looksrare.png"
+import x2y2_log from "../Content/x2y2.png"
 
 
 export function Activity() {
-
 
     // HARDCODED FOR THE MOMENT... SHOULD ADD A CONNECTOR TO THE LIVE API.
     //got a "None is not defined" error.. will temporarily fix with:
@@ -20,8 +18,6 @@ export function Activity() {
     let None = null;
     let False = false;
 
-
-    //Also hard coded the "id" of each trade
     let user_data = [{
     'from_address': '0xd722755aa3d8b2e9521209ee5014d0e446b82ff5',
     'marketplace_name': 'x2y2',
@@ -87,42 +83,66 @@ export function Activity() {
     'token_id': '7773',
     'type': 'ask'}];
 
-    //console.log(user_data[0])
-    //console.log(profile_pic)
 
 
-      //Set table
-    let _html = `
-    <tr class="titles">
-        <th>Trade</th>
-        <th>TokenId</th>
-        <th>Time</th>
-        <th>Price (ETH)</th>
-        <th>Marketplace</th>
-    </tr>
-    `;
 
+    const _html = user_data.map(
 
-    for(let i=0; i<user_data.length;i++){  
+        (elem) => {
 
-        let stamp = user_data[i].timestamp;
-        let DateObj = new Date(stamp * 1000).toISOString();
+            let ordertype = elem.type.charAt(0).toUpperCase() + elem.type.slice(1);
 
-        let ymd = DateObj.split("T")[0];
-        let hms = DateObj.split("T")[1].split(".")[0];
+            let tokenid = elem.token_id;
+    
+    
+            let stamp = elem.timestamp;
+            let DateObj = new Date(stamp * 1000).toISOString();
+    
+            let ymd = DateObj.split("T")[0];
+            let hms = DateObj.split("T")[1].split(".")[0];
+    
+            let alldate = '' + ymd + ' \xa0' +  hms;
+    
+    
+            let pricex = elem.price.toFixed(3);
+            if(pricex == 0){
+                pricex = "-"
+            }
+    
+            let placename = elem.marketplace_name;
+            console.log(placename)
+    
+            let image_logo = null;
+    
+            if(placename === null){
+                placename = "-";
+            }else if(placename === "x2y2"){
+                image_logo = x2y2_log;
 
-        let alldate = '' + ymd + ' ' +  hms;
-        
-        _html += `<tr>
-            <td style ="width:20%;">${user_data[i].type}</td>
-            <td style ="width:25%;">${user_data[i].token_id}</td>
-            <td style ="width:25%;">${alldate}</td>
-            <td style ="width:25%;">${user_data[i].price}</td>
-            <td style ="width:25%;">${user_data[i].marketplace_name}</td>
-      </tr>`;
+            }else if(placename ==="opensea"){
+                image_logo = opensea_log;
+    
+            }else if(placename === "looksrare"){
+                image_logo = looksrare_log;
+    
+            }else if(placename === "reservoir"){
+                image_logo = reservoir_log;
+    
+            }
 
+            return (
+                <tr>
+                    <td>{ordertype}</td>
+                    <td>{tokenid}</td>
+                    <td>{alldate}</td>
+                    <td>{pricex}</td>
+                    <td>{<img src={image_logo} alt="img logo" className='imagelogo' width="20px"></img>}</td>
+                </tr>
 
-    }
+                //placename
+            )
+        }
+    );
 
 
 
@@ -131,7 +151,7 @@ export function Activity() {
     return (
         <div className='activity'>
 
-            <img src={profile_pic} alt="profile_pic" width="90" className='profile_pic'/>
+            <img src={profile_pic} alt="profile_pic" width="100" className='profile_pic'/>
             
             <h1>Azuki</h1>
             <div className='grey1'>
@@ -142,11 +162,21 @@ export function Activity() {
 
             <table className="tableActivity">
                 <tbody>
-                    {parse(_html)}
+
+                    <tr className="titles">
+                        <th>Trade</th>
+                        <th>TokenId</th>
+                        <th>Time</th>
+                        <th>Price (ETH)</th>
+                        <th>Marketplace</th>
+                    </tr>
+
+                    {_html}
+
                 </tbody>
             </table>
 
 
         </div>
-    );
+    )
 }
