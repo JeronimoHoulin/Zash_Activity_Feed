@@ -1,10 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
+import { Activity } from './components/Dashboard/Activity';
+import { Header } from './components/Header/header';
 
 function App() {
   return (
     <div className="App">
-      <p>Hello World</p>
+
+      <Header />
+
+      <Activity />
+
     </div>
   );
 }

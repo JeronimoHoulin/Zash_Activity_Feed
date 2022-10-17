@@ -1,0 +1,63 @@
+
+.profile_pic{
+    border-radius: 100%;
+}
+
+
+.activity{
+
+    color: rgb(0,0,0);
+
+    font-size: 80%;
+
+
+    margin-top: 5vh;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+.grey1{
+
+    background-color: rgba(128, 128, 128, 0.171);
+
+    width: fit-content;
+
+    height: fit-content;
+
+    margin-bottom: 5%;
+    
+}
+
+.address{
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 2px;
+    margin-left: 15px;
+    margin-right: 15px;
+
+}
+
+
+
+.tableActivity {
+    border-collapse: collapse;
+}
+
+.tableActivity td {
+
+    height: 50px;
+
+    border-top: 15px solid #fff;
+    background-color: rgba(128, 128, 128, 0.171);
+}
+.tableActivity tr:not(:first-child):hover {background-color: rgba(128, 128, 128, 0.377)}
